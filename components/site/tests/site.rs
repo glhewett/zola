@@ -873,6 +873,26 @@ fn can_find_site_and_page_authors() {
     assert_eq!(0, p2.meta.authors.len());
 }
 
+#[test]
+fn can_build_site_with_hidden_pages() {
+    let (_, _tmp_dir, public) = build_site_with_setup("test_site", |mut site| {
+        site.config.build_search_index = true;
+        (site, true)
+    });
+
+    assert!(&public.exists());
+    assert!(file_exists!(public, "sitemap.xml"));
+    assert!(file_exists!(public, "robots.txt"));
+    assert!(file_exists!(public, "atom.xml"));
+    assert!(file_exists!(public, "search_index.en.js"));
+
+    // hidden pages
+    assert!(file_exists!(public, "hidden-directory/hidden-page/index.html"));
+    assert!(file_exists!(public, "hidden-directory/visible-page/index.html"));
+    assert!(file_exists!(public, "hidden-page/hidden-page/index.html"));
+    assert!(file_exists!(public, "hidden-page/visible-page/index.html"));
+}
+
 // Follows test_site/themes/sample/templates/current_path.html
 fn current_path(path: &str) -> String {
     format!("[current_path]({})", path)
