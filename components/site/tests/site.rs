@@ -21,7 +21,7 @@ fn can_parse_site() {
     let library = site.library.read().unwrap();
 
     // Correct number of pages (sections do not count as pages, draft are ignored)
-    assert_eq!(library.pages.len(), 35);
+    assert_eq!(library.pages.len(), 39);
     let posts_path = path.join("content").join("posts");
 
     // Make sure the page with a url doesn't have any sections
@@ -34,11 +34,11 @@ fn can_parse_site() {
     assert_eq!(asset_folder_post.file.components, vec!["posts".to_string()]);
 
     // That we have the right number of sections
-    assert_eq!(library.sections.len(), 13);
+    assert_eq!(library.sections.len(), 15);
 
     // And that the sections are correct
     let index_section = library.sections.get(&path.join("content").join("_index.md")).unwrap();
-    assert_eq!(index_section.subsections.len(), 5);
+    assert_eq!(index_section.subsections.len(), 7);
     assert_eq!(index_section.pages.len(), 5);
     assert!(index_section.ancestors.is_empty());
 
@@ -279,7 +279,7 @@ fn can_build_site_with_live_reload_and_drafts() {
 
     // drafted sections are included
     let library = site.library.read().unwrap();
-    assert_eq!(library.sections.len(), 15);
+    assert_eq!(library.sections.len(), 17);
 
     assert!(file_exists!(public, "secret_section/index.html"));
     assert!(file_exists!(public, "secret_section/draft-page/index.html"));
@@ -632,7 +632,7 @@ fn can_build_site_with_pagination_for_taxonomy() {
         "tags/a/page/1/index.html",
         "http-equiv=\"refresh\" content=\"0; url=https://replace-this-with-your-url.com/tags/a/\""
     ));
-    assert!(file_contains!(public, "tags/a/index.html", "Num pagers: 9"));
+    assert!(file_contains!(public, "tags/a/index.html", "Num pagers: 10"));
     assert!(file_contains!(public, "tags/a/index.html", "Page size: 2"));
     assert!(file_contains!(public, "tags/a/index.html", "Current index: 1"));
     assert!(!file_contains!(public, "tags/a/index.html", "has_prev"));
@@ -645,7 +645,7 @@ fn can_build_site_with_pagination_for_taxonomy() {
     assert!(file_contains!(
         public,
         "tags/a/index.html",
-        "Last: https://replace-this-with-your-url.com/tags/a/page/9/"
+        "Last: https://replace-this-with-your-url.com/tags/a/page/10/"
     ));
     assert!(!file_contains!(public, "tags/a/index.html", "has_prev"));
 
