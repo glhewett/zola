@@ -39,6 +39,9 @@ pub struct PageFrontMatter {
     pub datetime_tuple: Option<(i32, u8, u8)>,
     /// Whether this page is a draft
     pub draft: bool,
+    /// Whether the page is hidden from the search index, sitemap, atom feed, and section homepage
+    /// Defaults to `true`
+    pub hidden: bool,
     /// The page slug. Will be used instead of the filename if present
     /// Can't be an empty string if present
     pub slug: Option<String>,
@@ -151,6 +154,7 @@ impl Default for PageFrontMatter {
             datetime: None,
             datetime_tuple: None,
             draft: false,
+            hidden: false,
             slug: None,
             path: None,
             taxonomies: HashMap::new(),

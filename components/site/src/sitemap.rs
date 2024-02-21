@@ -64,6 +64,10 @@ pub fn find_entries<'a>(
     let mut entries = HashSet::new();
 
     for p in library.pages.values() {
+
+        // If the page is hidden, then it should not show up in the sitemap
+        if p.meta.hidden { continue; }
+
         let mut entry = SitemapEntry::new(
             Cow::Borrowed(&p.permalink),
             if p.meta.updated.is_some() { &p.meta.updated } else { &p.meta.date },

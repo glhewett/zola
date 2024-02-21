@@ -130,6 +130,11 @@ aliases = []
 # will be used as the page's author in the default feed template.
 authors = []
 
+# Attribute determining if the page is "hidden" from the search index, sitemap,
+# atom feed, the section pages, and any other future list that might reveal the 
+# existence of the page.
+hidden = false
+
 # When set to "true", the page will be in the search index. This is only used if
 # `build_search_index` is set to "true" in the Zola configuration and the parent section
 # hasn't set `in_search_index` to "false" in its front matter.

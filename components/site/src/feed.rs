@@ -34,7 +34,7 @@ pub fn render_feed(
     base_path: Option<&PathBuf>,
     additional_context_fn: impl Fn(Context) -> Context,
 ) -> Result<Option<String>> {
-    let mut pages = all_pages.into_iter().filter(|p| p.meta.date.is_some()).collect::<Vec<_>>();
+    let mut pages = all_pages.into_iter().filter(|p| p.meta.date.is_some() || !p.meta.hidden).collect::<Vec<_>>();
 
     // Don't generate a feed if none of the pages has a date
     if pages.is_empty() {

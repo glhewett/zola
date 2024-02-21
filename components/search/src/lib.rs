@@ -144,7 +144,9 @@ fn add_section_to_index(
         if !page.meta.in_search_index {
             continue;
         }
-
+        if page.meta.hidden {
+            continue;
+        }
         index.add_doc(
             &page.permalink,
             &fill_index(
