@@ -881,16 +881,54 @@ fn can_build_site_with_hidden_pages() {
     });
 
     assert!(&public.exists());
+
+    // site listings for public
     assert!(file_exists!(public, "sitemap.xml"));
-    assert!(file_exists!(public, "robots.txt"));
     assert!(file_exists!(public, "atom.xml"));
     assert!(file_exists!(public, "search_index.en.js"));
 
-    // hidden pages
+    // hidden directory section has render=false
+    assert!(!file_exists!(public, "hidden-directory/index.html"));
+
+    // should not contin link to section with render=false
+    assert!(!file_contains!(public, "sitemap.xml", "hidden-directory/index.html"));
+    assert!(!file_contains!(public, "atom.xml", "hidden-directory/index.html"));
+    assert!(!file_contains!(public, "search_index.en.js", "hidden-directory/index.html"));
+
+    // hidden directory section has page with hidden=true
     assert!(file_exists!(public, "hidden-directory/hidden-page/index.html"));
+
+    // should not contain link to page with hidden=true
+    assert!(!file_contains!(public, "sitemap.xml", "hidden-directory/hidden-page/"));
+    assert!(!file_contains!(public, "search_index.en.js", "hidden-directory/hidden-page/"));
+    assert!(!file_contains!(public, "atom.xml", "hidden-directory/hidden-page/"));
+
+    // hidden directory section has page with hidden=false
     assert!(file_exists!(public, "hidden-directory/visible-page/index.html"));
+
+    // should contain link to section with hidden=false
+    assert!(file_contains!(public, "sitemap.xml", "hidden-directory/visible-page/"));
+    assert!(file_contains!(public, "atom.xml", "hidden-directory/visible-page/"));
+    assert!(file_contains!(public, "search_index.en.js", "hidden-directory/visible-page/"));
+
+    // hidden page section has render=true
+    assert!(file_exists!(public, "hidden-page/index.html"));
+
+    // hidden directory section has page with hidden=true
     assert!(file_exists!(public, "hidden-page/hidden-page/index.html"));
+
+    // should not contain link to section with hidden=true
+    assert!(!file_contains!(public, "sitemap.xml", "hidden-page/hidden-page/"));
+    assert!(!file_contains!(public, "atom.xml", "hidden-page/hidden-page/"));
+    assert!(!file_contains!(public, "search_index.en.js", "hidden-page/hidden-page/"));
+
+    // hidden directory section has page with hidden=false
     assert!(file_exists!(public, "hidden-page/visible-page/index.html"));
+
+    // should contain link to section with hidden=false
+    assert!(file_contains!(public, "sitemap.xml", "hidden-page/visible-page/"));
+    assert!(file_contains!(public, "atom.xml", "hidden-page/visible-page/"));
+    assert!(file_contains!(public, "search_index.en.js", "hidden-page/visible-page/"));
 }
 
 // Follows test_site/themes/sample/templates/current_path.html
