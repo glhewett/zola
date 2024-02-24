@@ -37,7 +37,7 @@ pub fn render_feed(
     let mut pages = all_pages
         .into_iter()
         .filter(|p| p.meta.date.is_some())
-        // .filter(|p| !p.meta.hidden)
+        .filter(|p| !p.meta.hidden)
         .collect::<Vec<_>>();
 
     // Don't generate a feed if none of the pages has a date
