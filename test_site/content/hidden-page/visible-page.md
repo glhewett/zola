@@ -1,4 +1,6 @@
 +++
 title="non hidden page"
 date=2024-02-19
+[taxonomies]
+categories = ["hidden"]
 +++

@@ -921,6 +921,7 @@ fn can_build_site_with_hidden_pages() {
     assert!(!file_contains!(public, "sitemap.xml", "hidden-page/hidden-page/"));
     assert!(!file_contains!(public, "atom.xml", "hidden-page/hidden-page/"));
     assert!(!file_contains!(public, "search_index.en.js", "hidden-page/hidden-page/"));
+    assert!(!file_contains!(public, "hidden_page/index.html", "hidden-page/hidden-page/"));
 
     // hidden directory section has page with hidden=false
     assert!(file_exists!(public, "hidden-page/visible-page/index.html"));
@@ -929,6 +930,12 @@ fn can_build_site_with_hidden_pages() {
     assert!(file_contains!(public, "sitemap.xml", "hidden-page/visible-page/"));
     assert!(file_contains!(public, "atom.xml", "hidden-page/visible-page/"));
     assert!(file_contains!(public, "search_index.en.js", "hidden-page/visible-page/"));
+
+    // taxonomy with hidden page
+    assert!(file_exists!(public, "categories/index.html"));
+    assert!(file_exists!(public, "categories/hidden/index.html"));
+    assert!(!file_contains!(public, "categories/hidden/index.html", "hidden-page/hidden-page/"));
+    //assert!(file_contains!(public, "categories/hidden/index.html", "hidden-page/visible-page"));
 }
 
 // Follows test_site/themes/sample/templates/current_path.html
